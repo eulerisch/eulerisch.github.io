@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Portfolio & Blog</title>
+    <!-- Font Awesome for Social Logos & Theme Toggle -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts Imports: UnifrakturCook, Bebas Neue, and Cascadia Code (Normal/Medium weights) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cascadia+Code:wght@400;500;700&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Light Mode Variables */
+        :root {
+            --bg-color: #cfc3ae;         /* Warm Beige background */
+            --card-bg: #dbd1bb;          /* Darker beige for cards */
+            --text-color: #3d2b1f;       /* Deep warm brown */
+            --heading-color: #3d2b1f;    /* Deep warm brown for headings (replaced red/black) */
+            --accent-color: #3d2b1f;     /* Deep warm brown (replaced dark red) */
+            --accent-hover: #1a120c;     /* Darker brown hover */
+            --border-color: #bfae98;     /* Soft brown border */
+            --brand-grey: #6b6357;       /* Greyish tone for UnifrakturCook brand name */
+            --subtle-text: #6e594d;
+            
+            --font-body: 'Cascadia Code', 'Fira Code', monospace;
+            --font-heading: 'Bebas Neue', sans-serif, impact;
+            --font-brand: 'UnifrakturCook', cursive, serif;
+        }
+
+        /* Dark Mode Variables (Inverted Beige/Brown Palette) */
+        body.dark-mode {
+            --bg-color: #271a12;         /* Dark brown background */
+            --card-bg: #35251b;          /* Slightly lighter dark brown for cards */
+            --text-color: #cfc3ae;       /* Warm Beige text */
+            --heading-color: #cfc3ae;    /* Warm Beige headings */
+            --accent-color: #cfc3ae;     /* Warm Cream/Beige (replaced pink) */
+            --accent-hover: #f2ebd9;     /* Light Cream hover */
+            --border-color: #4a382c;     /* Dark border */
+            --brand-grey: #a19585;       /* Lighter greyish beige for brand name */
+            --subtle-text: #b5a494;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400; /* Regular Cascadia Mono */
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-top: 80px; /* Space for fixed navbar */
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- Header / Navigation Bar --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--bg-color);
+            border-bottom: 2px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            z-index: 1000;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+        }
+
+        /* Brand Name in UnifrakturCook Font */
+        .brand-name {
+            font-family: var(--font-brand);
+            font-size: 1.6rem;
+            color: var(--brand-grey);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            transition: color 0.3s ease;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: color 0.3s ease, border-bottom 0.3s ease;
+            padding-bottom: 2px;
+            border-bottom: 2px solid transparent;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        /* Controls Container */
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.2rem;
+            align-items: center;
+        }
+
+        .social-links a {
+            color: var(--text-color);
+            font-size: 1.3rem;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        /* Theme Switcher Toggle Button */
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.3rem;
+            cursor: pointer;
+            padding: 0.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            color: var(--accent-color);
+            transform: rotate(15deg);
+        }
+
+        /* --- Main Content Sections --- */
+        section {
+            padding: 4rem 10%;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Headings all use Bebas Neue Font */
+        h1, h2, h3 {
+            font-family: var(--font-heading);
+            font-weight: 400;
+            letter-spacing: 1px;
+            color: var(--heading-color);
+            margin-bottom: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        h1 {
+            font-size: 3rem;
+        }
+
+        h2 {
+            font-size: 2.8rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .date {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            color: var(--subtle-text);
+            margin-bottom: 0.5rem;
+        }
+
+        /* --- About Section (Split Hero Layout) --- */
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            max-width: 1100px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .hero-title-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .hero-title {
+            font-family: var(--font-heading);
+            font-size: 4.8rem;
+            line-height: 0.88;
+            letter-spacing: 1.5px;
+            color: var(--heading-color);
+            text-transform: uppercase;
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+
+        .about-text-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1.8rem;
+            font-family: var(--font-body);
+            font-weight: 400; /* Normal Cascadia Mono */
+            font-size: 1.05rem;
+            line-height: 1.5;
+            color: var(--text-color);
+        }
+
+        .about-text-content p {
+            max-width: 500px;
+        }
+
+        /* --- Blogs Section --- */
+        .blog-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .blog-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 2.2rem;
+            border-radius: 8px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Bebas Neue for blog titles */
+        .blog-card h3 {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            margin-bottom: 0.3rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        .blog-card h3 a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .blog-card h3 a:hover {
+            color: var(--accent-hover);
+            text-decoration: underline;
+        }
+
+        /* Normal Cascadia mono for preview text */
+        .blog-preview {
+            font-family: var(--font-body);
+            font-weight: 400;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-top: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .read-more-link {
+            color: var(--text-color);
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: color 0.2s ease;
+            display: inline-block;
+        }
+
+        .read-more-link:hover {
+            color: var(--accent-hover);
+            text-decoration: underline;
+        }
+
+        /* --- Full Article View --- */
+        #post-view {
+            display: none;
+            padding: 4rem 10%;
+            min-height: 80vh;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        #post-view h1 {
+            font-family: var(--font-heading);
+            font-weight: 400;
+            font-size: 3rem;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-color);
+            text-decoration: none;
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .back-btn:hover {
+            color: var(--accent-hover);
+            transform: translateX(-4px);
+        }
+
+        /* Normal Cascadia Mono for full blog article content */
+        .article-body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-top: 2rem;
+        }
+
+        .article-body p {
+            margin-bottom: 1.5rem;
+        }
+
+        strong, b {
+            font-weight: 700;
+        }
+
+        /* --- Contact Section --- */
+        #contact {
+            max-width: 1000px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        #contact p {
+            font-family: var(--font-body);
+            font-weight: 400;
+            font-size: 1.1rem;
+        }
+
+        #contact a {
+            color: var(--text-color);
+            font-family: var(--font-body);
+            font-weight: 700;
+            text-decoration: underline;
+        }
+
+        #contact a:hover {
+            color: var(--accent-hover);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        footer strong {
+            font-weight: 700;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 850px) {
+            .about-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .hero-title {
+                font-size: 3.5rem;
+            }
+
+            .header-left {
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-left">
+        <!-- Brand Name wrapped in a link to redirect to home -->
+        <a href="#about" style="text-decoration: none;">
+            <span class="brand-name">SHAHIN MATIN</span>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="#about" class="nav-link active">About</a></li>
+                <li><a href="#blogs" class="nav-link">Blogs</a></li>
+                <li><a href="#contact" class="nav-link">Contact Me</a></li>
+            </ul>
+        </nav>
+    </div>
+
+        <div class="header-controls">
+            <!-- Social Icons -->
+            <div class="social-links">
+                <a href="https://x.com/euleresque" target="_blank" aria-label="X Profile">
+                    <i class="fa-brands fa-twitter"></i>
+                </a>
+                <a href="https://discord.com/users/eulerisch" target="_blank" aria-label="Discord Profile">
+                    <i class="fa-brands fa-discord"></i>
+                </a>
+                <a href="https://instagram.com/euleresque" target="_blank" aria-label="Instagram Profile">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+            </div>
+
+            <!-- Sun / Moon Theme Toggle Button -->
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode">
+                <i id="theme-icon" class="fa-solid fa-sun"></i>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Main Homepage Sections Container -->
+        <div id="home-view">
+            <!-- About Section -->
+            <section id="about">
+                <div class="about-container">
+                    <div class="hero-title-container">
+                        <h1 class="hero-title">
+                            WELCOME<br>
+                            TO MY<br>
+                            CORNER<br>
+                            OF THE<br>
+                            WEB
+                        </h1>
+                    </div>
+                    <div class="about-text-content">
+                        <p>
+                            I am an 18 year old high school (almost university) student living in Germany. I moved to Germany from Australia in 2018, yet my parents are Persian and I was born in Dubai. I'm passionate about mathematics, physics, biology, chemistry and philosophy, even though I larp most of it! I'm in the middle of my first existential crisis and I hope it will be over soon.
+                        </p>
+                        <p>
+                            I am making this blog to preserve my thoughts in a place where they're safer than on paper. I hope that I can one day laugh about how stressed out I am right now, and that my future self can look back and see how good his life is.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Blogs Section -->
+            <section id="blogs">
+                <h2>LATEST POSTS</h2>
+                <div class="blog-grid">
+
+                    <!-- Blog Post 1 -->
+                    <article class="blog-card">
+                        <h3><a href="#/post/rant-about-religion">RANT ABOUT RELIGION</a></h3>
+                        <div class="date">Published on: September 19, 2026</div>
+                        <div class="blog-preview">
+                            Why is God everywhere? One cannot hide from Him. Not in the sense that his presence is integrated into each and every one...
+                        </div>
+                        <a href="#/post/rant-about-religion" class="read-more-link">Read full post &rarr;</a>
+                    </article>
+
+                    <!-- Blog Post 2 -->
+                    <article class="blog-card">
+                        <h3><a href="#/post/getting-started-web-dev">GETTING STARTED WITH WEB DEVELOPMENT</a></h3>
+                        <div class="date">Published on: September 19, 2026</div>
+                        <div class="blog-preview">
+                            Building your own website from scratch is one of the most rewarding projects you can undertake. 
+                            It gives you full creative freedom over layout, typography, and interactivity...
+                        </div>
+                        <a href="#/post/getting-started-web-dev" class="read-more-link">Read full post &rarr;</a>
+                    </article>
+
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact">
+                <h2>CONTACT ME</h2>
+                <p>
+                    Reach out if you have any questions, if you want to hire me (preferably at a LARP company!), or if you just want to say hi! :-)
+                </p>
+                <p style="margin-top: 1rem;">
+                    Email: <a href="mailto:shahin.matin@hotmail.com">shahin.matin@hotmail.com</a>
+                </p>
+            </section>
+        </div>
+
+        <!-- Dedicated Full Article Page Container -->
+        <article id="post-view">
+            <a href="#blogs" class="back-btn">&larr; Back to all posts</a>
+            <h1 id="article-title">Article Title</h1>
+            <div id="article-date" class="date">Published date</div>
+            <div id="article-body" class="article-body">
+                <!-- Post content loaded via JavaScript -->
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 <strong>Shahin Matin</strong>. Fuelled by coffee and Ritalin.</p>
+    </footer>
+
+    <script>
+        // --- 1. Dark Mode Toggle Handler ---
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+
+        // Check for saved user preference in localStorage
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeIcon.classList.remove('fa-sun');
+            themeIcon.classList.add('fa-moon');
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // --- 2. Data Store for Full Blog Posts ---
+        const blogPosts = {
+            'rant-about-religion': {
+                title: "RANT ABOUT RELIGION",
+                date: "Published on: September 19, 2026",
+                content: `
+                    <p>Why is God everywhere? One cannot hide from Him. Not in the sense that his presence is integrated into each and every one of us, but rather the popular idea, embedded into humankind, that a higher being must exist. This is ironic, as humans are the most egotistic beings to have set foot on this rock. So why would they willingly submit themselves into diminution?</p>
+                    <p>The answer is that - as egotistical and biased humans are, they seek solace. There is no other answer to the meaning of life, other than God, for these people. We beings are constantly scavenging for a reason as to why WE, US, why WE exist, supposedly alone, in our universe. So, the logical thing was to explain unexplainable phenomena (during those ages), through the existence of a higher being. Now, we humans have another trait, since we are still animals, we fear change. This is something evolutionary, since change disturbs a groups' dynamics and must adapt quickly to continue surviving. Hence, our ideals of human life and why we exist have not evolved since religion was invented. Even after the colossal amount of scientific discoveries, believing in a God is still the answer for the majority of people.</p>
+                    <p>My confusion arises due to the fact that so many beings can submit to believing in one specific God - as there MUST be a right God and philosophy of living, Briefly said, every devotee essentially takes part in a giant lottery game, where no one wins at the end.</p>
+                    <p> I respect religions, (lol no i dont) on the other hand, I do not tolerate the disrespect and shortsightedness that comes packaged alongside it. It is understandable, for one thing, if people are at a point in their lives where they are scared and confused, thus seeking a divinity due to their vulnerability. But if one thinks about the unholy (get it) amount of wars that have occurred, fighting for the "correct" belief, all the segregations and sick acts of people, can we really continue to tolerate religion? Can we not place our beliefs and hearts into a higher being that created our universe and whom left us, in order to observe humankind as some kind of social experiment, instead of crying out loud that "Jesus died for your sins!"? I mean, if I jumped off of a building and claimed that I was going to cleanse mankind of their wrongdoings, I would not be praised, but rather be placed in an asylum. The ignorance of mankind is something I pray (lol) becomes resolved in the near future.</p>
+                    <p>Religion is the chained foot to a rock that keeps us behind and hinders us from moving towards a better and brighter future. Yet the myths and legends in divine scripts are still not questioned and are accepted (because they can be interpreted in any way).</p>
+                `
+            },
+            'getting-started-web-dev': {
+                title: "GETTING STARTED WITH WEB DEVELOPMENT",
+                date: "Published on: October 18, 2024",
+                content: `
+                    <p>Building your own website from scratch is one of the most rewarding projects you can undertake. It gives you full creative freedom over layout, typography, and interactivity allowing you to showcase your personal brand without the constraints of third-party platforms.</p>
+                    <p>With basic HTML, CSS, and JavaScript, you can bring almost any concept to life. Beyond aesthetics, learning web fundamentals helps you understand how the internet operates under the hood.</p>
+                    <p>Start small with single-page projects, refine your CSS styling skills, and gradually integrate client-side logic or dynamic routing as your needs grow.</p>
+                `
+            }
+        };
+
+        const homeView = document.getElementById('home-view');
+        const postView = document.getElementById('post-view');
+        const articleTitle = document.getElementById('article-title');
+        const articleDate = document.getElementById('article-date');
+        const articleBody = document.getElementById('article-body');
+        const sections = document.querySelectorAll('#home-view section');
+        const navLinks = document.querySelectorAll('nav a');
+
+        // --- 3. Client-side Router ---
+        function handleRoute() {
+            const hash = window.location.hash;
+
+            if (hash.startsWith('#/post/')) {
+                const postId = hash.replace('#/post/', '');
+                const post = blogPosts[postId];
+
+                if (post) {
+                    homeView.style.display = 'none';
+                    postView.style.display = 'block';
+
+                    articleTitle.textContent = post.title;
+                    articleDate.textContent = post.date;
+                    articleBody.innerHTML = post.content;
+
+                    navLinks.forEach(link => link.classList.remove('active'));
+                    const blogNavLink = document.querySelector('nav a[href="#blogs"]');
+                    if (blogNavLink) blogNavLink.classList.add('active');
+
+                    window.scrollTo(0, 0);
+                    return;
+                }
+            }
+
+            postView.style.display = 'none';
+            homeView.style.display = 'block';
+
+            if (hash && hash !== '#') {
+                const targetElement = document.querySelector(hash);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        }
+
+        window.addEventListener('hashchange', handleRoute);
+        window.addEventListener('load', handleRoute);
+
+        // --- 4. Scroll Navigation Highlighting ---
+        window.addEventListener('scroll', () => {
+            if (homeView.style.display === 'none') return;
+
+            let currentSection = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (window.scrollY >= (sectionTop - sectionHeight / 3)) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentSection}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
