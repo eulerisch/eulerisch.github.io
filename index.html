@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shahin's Blog & Portfolio</title>
+    <title>Shahin's Blog</title>
     <!-- Font Awesome for Social Logos & Theme Toggle -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -484,23 +484,22 @@
 
                     <!-- Blog Post 1 -->
                     <article class="blog-card">
+                        <h3><a href="#/post/between-two-worlds">BETWEEN TWO WORLDS</a></h3>
+                        <div class="date">Published on: September 26, 2026</div>
+                        <div class="blog-preview">
+                            For the past five years, living as a guy has been my reality. Cutting my hair, changing my presentation, and...
+                        </div>
+                        <a href="#/post/between-two-worlds" class="read-more-link">Read full post &rarr;</a>
+                    </article>
+
+                    <!-- Blog Post 2 -->
+                    <article class="blog-card">
                         <h3><a href="#/post/rant-about-religion">RANT ABOUT RELIGION</a></h3>
                         <div class="date">Published on: September 19, 2026</div>
                         <div class="blog-preview">
                             Why is God everywhere? One cannot hide from Him. Not in the sense that his presence is integrated into each and every one...
                         </div>
                         <a href="#/post/rant-about-religion" class="read-more-link">Read full post &rarr;</a>
-                    </article>
-
-                    <!-- Blog Post 2 -->
-                    <article class="blog-card">
-                        <h3><a href="#/post/getting-started-web-dev">GETTING STARTED WITH WEB DEVELOPMENT</a></h3>
-                        <div class="date">Published on: September 19, 2026</div>
-                        <div class="blog-preview">
-                            Building your own website from scratch is one of the most rewarding projects you can undertake. 
-                            It gives you full creative freedom over layout, typography, and interactivity...
-                        </div>
-                        <a href="#/post/getting-started-web-dev" class="read-more-link">Read full post &rarr;</a>
                     </article>
 
                 </div>
@@ -562,6 +561,19 @@
 
         // --- 2. Data Store for Full Blog Posts ---
         const blogPosts = {
+            'between-two-worlds': {
+                title: "BETWEEN TWO WORLDS",
+                date: "Published on: September 26, 2026",
+                content: `
+                    <p>For the past five years, living as a guy has been my reality. Cutting my hair, changing my presentation, and being recognized as male in daily life has brought a sense of comfort that living as a girl never provided. Yet, despite living this way since 2021, navigating this path often brings waves of intense self-doubt, imposter syndrome, and emotional exhaustion.</p>
+                    <p>When you grow up in an environment where your identity is constantly questioned, it becomes second nature to question yourself. Family members point out feminine features, frame social support as performative kindness, or suggest that daily self-talk could change internal identity. Warnings about detransition, threats of disownment over medical transition, and suggestions to postpone living authentically until years down the line create a constant, heavy pressure.</p>
+                    <p>It leaves you trapped in a painful contradiction. Loving a family that raised you while struggling against their lack of acceptance creates constant emotional friction. Parents often link trans identity to past periods of teenage crisis, viewing it as a leftover symptom of prior instability rather than a steady, stabilizing constant. Trying to explain that living authentically is a source of peace, rather than an impulsive phase, can feel almost impossible.</p>
+                    <p>Lately, the emotional strain has peaked. Between managing neurodivergence, academic stress, and ongoing conflict at home, severe burnout sets in. It leads to endless loops of self-questioning: <em>Was this identity influenced by social media years ago? Is it a fear of general social perception? What if medical steps like testosterone therapy bring regret later on?</em></p>
+                    <p>When the stress becomes overwhelming, dissociation takes over. Identifying as a boy feels unnatural, but identifying as a girl feels like pretending. Everything feels detached, like playing a role rather than simply existing.</p>
+                    <p>Yet, beneath the noise, guilt, and social pressure, the underlying need for a clean slate remains clear: moving forward into university, building genuine social connections as a guy, and stepping into adulthood authentically.</p>
+                    <p>Navigating medical appointments and future decisions doesn't require having every single answer today. The focus remains on step-by-step progress—protecting mental peace, managing immediate responsibilities, and granting oneself the time to navigate identity without rushing to meet anyone else's timeline.</p>
+                `
+            },
             'rant-about-religion': {
                 title: "RANT ABOUT RELIGION",
                 date: "Published on: September 19, 2026",
@@ -571,15 +583,6 @@
                     <p>My confusion arises due to the fact that so many beings can submit to believing in one specific God - as there MUST be a right God and philosophy of living, Briefly said, every devotee essentially takes part in a giant lottery game, where no one wins at the end.</p>
                     <p> I respect religions, (lol no i dont) on the other hand, I do not tolerate the disrespect and shortsightedness that comes packaged alongside it. It is understandable, for one thing, if people are at a point in their lives where they are scared and confused, thus seeking a divinity due to their vulnerability. But if one thinks about the unholy (get it) amount of wars that have occurred, fighting for the "correct" belief, all the segregations and sick acts of people, can we really continue to tolerate religion? Can we not place our beliefs and hearts into a higher being that created our universe and whom left us, in order to observe humankind as some kind of social experiment, instead of crying out loud that "Jesus died for your sins!"? I mean, if I jumped off of a building and claimed that I was going to cleanse mankind of their wrongdoings, I would not be praised, but rather be placed in an asylum. The ignorance of mankind is something I pray (lol) becomes resolved in the near future.</p>
                     <p>Religion is the chained foot to a rock that keeps us behind and hinders us from moving towards a better and brighter future. Yet the myths and legends in divine scripts are still not questioned and are accepted (because they can be interpreted in any way).</p>
-                `
-            },
-            'getting-started-web-dev': {
-                title: "GETTING STARTED WITH WEB DEVELOPMENT",
-                date: "Published on: October 18, 2024",
-                content: `
-                    <p>Building your own website from scratch is one of the most rewarding projects you can undertake. It gives you full creative freedom over layout, typography, and interactivity allowing you to showcase your personal brand without the constraints of third-party platforms.</p>
-                    <p>With basic HTML, CSS, and JavaScript, you can bring almost any concept to life. Beyond aesthetics, learning web fundamentals helps you understand how the internet operates under the hood.</p>
-                    <p>Start small with single-page projects, refine your CSS styling skills, and gradually integrate client-side logic or dynamic routing as your needs grow.</p>
                 `
             }
         };
