@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shahin's Blog</title>
+    <title>shahin's blog</title>
     <!-- Font Awesome for Social Logos & Theme Toggle -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Google Fonts Imports: UnifrakturCook, Bebas Neue, and Cascadia Code (Normal/Medium weights) -->
+    <!-- Google Fonts Imports: Instrument Serif, UnifrakturCook, Bebas Neue, Cascadia Code -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cascadia+Code:wght@400;500;700&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cascadia+Code:wght@400;500;700&family=Instrument+Serif:ital@0;1&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
 
     <style>
         /* Light Mode Variables */
@@ -18,8 +18,8 @@
             --bg-color: #cfc3ae;         /* Warm Beige background */
             --card-bg: #dbd1bb;          /* Darker beige for cards */
             --text-color: #3d2b1f;       /* Deep warm brown */
-            --heading-color: #3d2b1f;    /* Deep warm brown for headings (replaced red/black) */
-            --accent-color: #3d2b1f;     /* Deep warm brown (replaced dark red) */
+            --heading-color: #3d2b1f;    /* Deep warm brown for headings */
+            --accent-color: #3d2b1f;     /* Deep warm brown */
             --accent-hover: #1a120c;     /* Darker brown hover */
             --border-color: #bfae98;     /* Soft brown border */
             --brand-grey: #6b6357;       /* Greyish tone for UnifrakturCook brand name */
@@ -28,15 +28,16 @@
             --font-body: 'Cascadia Code', 'Fira Code', monospace;
             --font-heading: 'Bebas Neue', sans-serif, impact;
             --font-brand: 'UnifrakturCook', cursive, serif;
+            --font-editorial: 'Instrument Serif', Georgia, serif;
         }
 
-        /* Dark Mode Variables (Inverted Beige/Brown Palette) */
+        /* Dark Mode Variables */
         body.dark-mode {
             --bg-color: #271a12;         /* Dark brown background */
             --card-bg: #35251b;          /* Slightly lighter dark brown for cards */
             --text-color: #cfc3ae;       /* Warm Beige text */
             --heading-color: #cfc3ae;    /* Warm Beige headings */
-            --accent-color: #cfc3ae;     /* Warm Cream/Beige (replaced pink) */
+            --accent-color: #cfc3ae;     /* Warm Cream/Beige */
             --accent-hover: #f2ebd9;     /* Light Cream hover */
             --border-color: #4a382c;     /* Dark border */
             --brand-grey: #a19585;       /* Lighter greyish beige for brand name */
@@ -55,11 +56,10 @@
 
         body {
             font-family: var(--font-body);
-            font-weight: 400; /* Regular Cascadia Mono */
+            font-weight: 400;
             background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.6;
-            padding-top: 80px; /* Space for fixed navbar */
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
@@ -69,14 +69,21 @@
             top: 0;
             left: 0;
             width: 100%;
-            background-color: var(--bg-color);
-            border-bottom: 2px solid var(--border-color);
+            background-color: transparent; /* Blends seamlessly with painting splash */
+            border-bottom: 2px solid transparent;
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 1rem 5%;
             z-index: 1000;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
+            transition: background-color 0.4s ease, border-color 0.4s ease, backdrop-filter 0.4s ease;
+        }
+
+        header.scrolled {
+            background-color: color-mix(in srgb, var(--bg-color) 88%, transparent);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-bottom: 2px solid var(--border-color);
         }
 
         .header-left {
@@ -85,7 +92,6 @@
             gap: 2.5rem;
         }
 
-        /* Brand Name in UnifrakturCook Font */
         .brand-name {
             font-family: var(--font-brand);
             font-size: 1.6rem;
@@ -93,7 +99,12 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: 700;
-            transition: color 0.3s ease;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.35);
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        header.scrolled .brand-name {
+            text-shadow: none;
         }
 
         nav ul {
@@ -108,9 +119,14 @@
             letter-spacing: 0.5px;
             text-decoration: none;
             color: var(--text-color);
-            transition: color 0.3s ease, border-bottom 0.3s ease;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.35);
+            transition: color 0.3s ease, border-bottom 0.3s ease, text-shadow 0.3s ease;
             padding-bottom: 2px;
             border-bottom: 2px solid transparent;
+        }
+
+        header.scrolled nav a {
+            text-shadow: none;
         }
 
         nav a:hover, nav a.active {
@@ -118,11 +134,10 @@
             border-bottom: 2px solid var(--accent-color);
         }
 
-        /* Controls Container */
         .header-controls {
             display: flex;
             align-items: center;
-            gap: 1.5rem;
+            gap: 1.2rem;
         }
 
         .social-links {
@@ -134,7 +149,18 @@
         .social-links a {
             color: var(--text-color);
             font-size: 1.3rem;
-            transition: color 0.3s ease, transform 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            text-decoration: none;
+            border-bottom: none;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.35);
+            transition: color 0.3s ease, transform 0.2s ease, text-shadow 0.3s ease;
+        }
+
+        header.scrolled .social-links a {
+            text-shadow: none;
         }
 
         .social-links a:hover {
@@ -142,18 +168,23 @@
             transform: translateY(-2px);
         }
 
-        /* Theme Switcher Toggle Button */
         .theme-toggle {
             background: none;
             border: none;
             color: var(--text-color);
             font-size: 1.3rem;
             cursor: pointer;
-            padding: 0.2rem;
+            padding: 0;
+            line-height: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: color 0.3s ease, transform 0.3s ease;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.35);
+            transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        header.scrolled .theme-toggle {
+            text-shadow: none;
         }
 
         .theme-toggle:hover {
@@ -161,16 +192,154 @@
             transform: rotate(15deg);
         }
 
-        /* --- Main Content Sections --- */
-        section {
-            padding: 4rem 10%;
+        /* --- 1. Full-Screen Painting Splash --- */
+        .painting-splash {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            background-color: #1c1613;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            will-change: opacity;
+        }
+
+        .painting-splash img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 25%;
+            display: block;
+            opacity: 0;
+            animation: fadeInPainting 1.4s ease 0.4s forwards;
+            will-change: opacity;
+        }
+
+        @keyframes fadeInPainting {
+            to { opacity: 1; }
+        }
+
+        body.dark-mode .painting-splash img {
+            filter: brightness(0.82) contrast(1.05);
+        }
+
+        .splash-hello {
+            position: relative;
+            z-index: 2;
+            font-family: var(--font-editorial);
+            font-style: italic;
+            font-weight: 400;
+            font-size: clamp(5rem, 12vw, 10.5rem);
+            color: #f2ebd9;
+            letter-spacing: -0.02em;
+            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.65);
+            opacity: 0;
+            transform: translateY(15px);
+            animation: fadeInHello 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+            will-change: opacity, transform;
+        }
+
+        @keyframes fadeInHello {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* --- 2. Scroll-Choreographed Intro + Bio Section --- */
+        #about {
+            position: relative;
+            height: 360vh;
+            padding: 0;
+            min-height: unset;
+            display: block;
+        }
+
+        .sticky-stage {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 6% 0 6%;
+        }
+
+        .hero-headline-wrapper {
+            position: absolute;
+            left: 50%;
+            top: 52%;
+            transform: translate(-50%, -50%);
+            width: 90vw;
+            max-width: 1400px;
+            text-align: center;
+            will-change: left, transform, width;
+        }
+
+        /* Editorial Serif Typography for WELCOME TO MY CORNER OF THE WEB */
+        .hero-editorial-text {
+            font-family: var(--font-editorial);
+            font-weight: 400;
+            font-size: clamp(4rem, 9.5vw, 9rem);
+            line-height: 0.92;
+            letter-spacing: -0.02em;
+            color: var(--heading-color);
+            text-transform: uppercase;
+            user-select: none;
+        }
+
+        .hero-editorial-text .serif-italic {
+            font-style: italic;
+            font-size: 1.08em;
+            padding: 0 0.04em;
+        }
+
+        .reveal-word {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(28px);
+            filter: blur(6px);
+            will-change: opacity, transform, filter;
+        }
+
+        .bio-reveal-panel {
+            position: absolute;
+            right: 7%;
+            top: 52%;
+            transform: translateY(-42%);
+            width: 42%;
+            max-width: 520px;
+            opacity: 0;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1.6rem;
+            font-family: var(--font-body);
+            font-weight: 400;
+            font-size: 1.02rem;
+            line-height: 1.6;
+            color: var(--text-color);
+            will-change: opacity, transform;
+        }
+
+        .bio-reveal-panel.is-visible {
+            pointer-events: auto;
+        }
+
+        /* --- Standard Sections --- */
+        .content-section {
+            padding: 5rem 10%;
             min-height: 80vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
 
-        /* Headings all use Bebas Neue Font */
         h1, h2, h3 {
             font-family: var(--font-heading);
             font-weight: 400;
@@ -180,9 +349,7 @@
             transition: color 0.3s ease;
         }
 
-        h1 {
-            font-size: 3rem;
-        }
+        h1 { font-size: 3rem; }
 
         h2 {
             font-size: 2.8rem;
@@ -198,46 +365,17 @@
             margin-bottom: 0.5rem;
         }
 
-        /* --- About Section (Split Hero Layout) --- */
-        .about-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-            max-width: 1100px;
-            margin: 0 auto;
-            width: 100%;
+        /* --- JavaScript Scroll Fade-In Elements --- */
+        .scroll-fade {
+            opacity: 0;
+            transform: translateY(35px);
+            transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
         }
 
-        .hero-title-container {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .hero-title {
-            font-family: var(--font-heading);
-            font-size: 4.8rem;
-            line-height: 0.88;
-            letter-spacing: 1.5px;
-            color: var(--heading-color);
-            text-transform: uppercase;
-            font-weight: 400;
-            transition: color 0.3s ease;
-        }
-
-        .about-text-content {
-            display: flex;
-            flex-direction: column;
-            gap: 1.8rem;
-            font-family: var(--font-body);
-            font-weight: 400; /* Normal Cascadia Mono */
-            font-size: 1.05rem;
-            line-height: 1.5;
-            color: var(--text-color);
-        }
-
-        .about-text-content p {
-            max-width: 500px;
+        .scroll-fade.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* --- Blogs Section --- */
@@ -263,7 +401,6 @@
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
         }
 
-        /* Bebas Neue for blog titles */
         .blog-card h3 {
             font-family: var(--font-heading);
             font-size: 2.2rem;
@@ -283,7 +420,6 @@
             text-decoration: underline;
         }
 
-        /* Normal Cascadia mono for preview text */
         .blog-preview {
             font-family: var(--font-body);
             font-weight: 400;
@@ -311,7 +447,7 @@
         /* --- Full Article View --- */
         #post-view {
             display: none;
-            padding: 4rem 10%;
+            padding: 7rem 10% 4rem 10%;
             min-height: 80vh;
             max-width: 900px;
             margin: 0 auto;
@@ -341,7 +477,6 @@
             transform: translateX(-4px);
         }
 
-        /* Normal Cascadia Mono for full blog article content */
         .article-body {
             font-family: var(--font-body);
             font-weight: 400;
@@ -397,264 +532,446 @@
         }
 
         /* Responsive Breakpoints */
-        @media (max-width: 850px) {
-            .about-container {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .hero-title {
-                font-size: 3.5rem;
-            }
-
+        @media (max-width: 900px) {
             .header-left {
                 gap: 1rem;
+            }
+
+            .hero-editorial-text {
+                font-size: clamp(3rem, 11vw, 5.5rem);
+            }
+
+            .bio-reveal-panel {
+                width: 86%;
+                right: 7%;
+                font-size: 0.95rem;
             }
         }
     </style>
 </head>
 <body>
 
-<header>
+<header id="site-header">
     <div class="header-left">
-        <!-- Brand Name wrapped in a link to redirect to home -->
-        <a href="#about" style="text-decoration: none;">
-            <span class="brand-name">SHAHIN MATIN</span>
+        <!-- Brand Name wrapped in a link to redirect to top -->
+        <a href="#top" style="text-decoration: none;">
+            <span class="brand-name">shahin matin</span>
         </a>
         <nav>
             <ul>
-                <li><a href="#about" class="nav-link active">About</a></li>
-                <li><a href="#blogs" class="nav-link">Blogs</a></li>
-                <li><a href="#contact" class="nav-link">Contact Me</a></li>
+                <li><a href="#about" class="nav-link active">about</a></li>
+                <li><a href="#blogs" class="nav-link">blogs</a></li>
+                <li><a href="#contact" class="nav-link">contact me</a></li>
             </ul>
         </nav>
     </div>
 
-        <div class="header-controls">
-            <!-- Social Icons -->
-            <div class="social-links">
-                <a href="https://x.com/euleresque" target="_blank" aria-label="X Profile">
-                    <i class="fa-brands fa-twitter"></i>
-                </a>
-                <a href="https://discord.com/users/eulerisch" target="_blank" aria-label="Discord Profile">
-                    <i class="fa-brands fa-discord"></i>
-                </a>
-                <a href="https://instagram.com/euleresque" target="_blank" aria-label="Instagram Profile">
-                    <i class="fa-brands fa-instagram"></i>
-                </a>
-            </div>
-
-            <!-- Sun / Moon Theme Toggle Button -->
-            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode">
-                <i id="theme-icon" class="fa-solid fa-sun"></i>
-            </button>
-        </div>
-    </header>
-
-    <main>
-        <!-- Main Homepage Sections Container -->
-        <div id="home-view">
-            <!-- About Section -->
-            <section id="about">
-                <div class="about-container">
-                    <div class="hero-title-container">
-                        <h1 class="hero-title">
-                            WELCOME<br>
-                            TO MY<br>
-                            CORNER<br>
-                            OF THE<br>
-                            WEB
-                        </h1>
-                    </div>
-                    <div class="about-text-content">
-                        <p>
-                            I am an 18 year old high school (almost university) student living in Germany. I moved to Germany from Australia in 2018, yet my parents are Persian and I was born in Dubai. I'm passionate about mathematics, physics, biology, chemistry and philosophy, even though I larp most of it! I'm in the middle of my first existential crisis and I hope it will be over soon.
-                        </p>
-                        <p>
-                            I am making this blog to preserve my thoughts in a place where they're safer than on paper. I hope that I can one day laugh about how stressed out I am right now, and that my future self can look back and see how good his life is.
-                        </p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Blogs Section -->
-            <section id="blogs">
-                <h2>LATEST POSTS</h2>
-                <div class="blog-grid">
-
-                    <!-- Blog Post 1 -->
-                    <article class="blog-card">
-                        <h3><a href="#/post/between-two-worlds">BETWEEN TWO WORLDS</a></h3>
-                        <div class="date">Published on: September 26, 2026</div>
-                        <div class="blog-preview">
-                            For the past five years, living as a guy has been my reality. Cutting my hair, changing my presentation, and...
-                        </div>
-                        <a href="#/post/between-two-worlds" class="read-more-link">Read full post &rarr;</a>
-                    </article>
-
-                    <!-- Blog Post 2 -->
-                    <article class="blog-card">
-                        <h3><a href="#/post/rant-about-religion">RANT ABOUT RELIGION</a></h3>
-                        <div class="date">Published on: September 19, 2026</div>
-                        <div class="blog-preview">
-                            Why is God everywhere? One cannot hide from Him. Not in the sense that his presence is integrated into each and every one...
-                        </div>
-                        <a href="#/post/rant-about-religion" class="read-more-link">Read full post &rarr;</a>
-                    </article>
-
-                </div>
-            </section>
-
-            <!-- Contact Section -->
-            <section id="contact">
-                <h2>CONTACT ME</h2>
-                <p>
-                    Reach out if you have any questions, if you want to hire me (preferably at a LARP company!), or if you just want to say hi! :-)
-                </p>
-                <p style="margin-top: 1rem;">
-                    Email: <a href="mailto:shahin.matin@hotmail.com">shahin.matin@hotmail.com</a>
-                </p>
-            </section>
+    <div class="header-controls">
+        <!-- Social Icons -->
+        <div class="social-links">
+            <a href="https://x.com/euleresque" target="_blank" aria-label="X Profile">
+                <i class="fa-brands fa-twitter"></i>
+            </a>
+            <a href="https://discord.com/users/eulerisch" target="_blank" aria-label="Discord Profile">
+                <i class="fa-brands fa-discord"></i>
+            </a>
+            <a href="https://instagram.com/euleresque" target="_blank" aria-label="Instagram Profile">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
         </div>
 
-        <!-- Dedicated Full Article Page Container -->
-        <article id="post-view">
-            <a href="#blogs" class="back-btn">&larr; Back to all posts</a>
-            <h1 id="article-title">Article Title</h1>
-            <div id="article-date" class="date">Published date</div>
-            <div id="article-body" class="article-body">
-                <!-- Post content loaded via JavaScript -->
+        <!-- Sun / Moon Theme Toggle Button -->
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode">
+            <i id="theme-icon" class="fa-solid fa-sun"></i>
+        </button>
+    </div>
+</header>
+
+<main id="top">
+    <!-- Main Homepage Sections Container -->
+    <div id="home-view">
+        
+        <!-- 1. Full-Viewport Painting Splash with "Hello." that fades out on scroll -->
+        <div class="painting-splash" id="painting-splash">
+            <!-- Ensure image_754768.jpg is in the same directory as this HTML file -->
+            <img src="image_754768.jpg" alt="Wanderer above the Sea of Fog by Caspar David Friedrich">
+            <h1 class="splash-hello" id="splash-hello">Hello.</h1>
+        </div>
+
+        <!-- 2. Scroll-Choreographed Intro + Biography -->
+        <section id="about">
+            <div class="sticky-stage" id="sticky-stage">
+                
+                <!-- Full-page Editorial Serif Headline -->
+                <div class="hero-headline-wrapper" id="hero-headline">
+                    <h1 class="hero-editorial-text">
+                        <span class="reveal-word">WELCOME</span>
+                        <span class="reveal-word">TO</span>
+                        <span class="reveal-word serif-italic">MY</span><br>
+                        <span class="reveal-word">CORNER</span>
+                        <span class="reveal-word">OF</span><br>
+                        <span class="reveal-word">THE</span>
+                        <span class="reveal-word serif-italic">WEB.</span>
+                    </h1>
+                </div>
+
+                <!-- Biography that fades in on the right as the headline slides left -->
+                <div class="bio-reveal-panel" id="bio-panel">
+                    <p>
+                        i am an 18 year old high school (almost university) student living in germany. i moved to germany from australia in 2018, yet my parents are persian and i was born in dubai. i'm passionate about mathematics, physics, biology, chemistry and philosophy, but most of all, machine learning.
+                    </p>
+                    <p>
+                        i am making this blog to preserve my thoughts in a place where they're safer than on paper. i hope that i can one day revisit this page as a time capsule, and that my future self can look back and see how good his life is.
+                    </p>
+                </div>
+
             </div>
-        </article>
-    </main>
+        </section>
 
-    <footer>
-        <p>&copy; 2026 <strong>Shahin Matin</strong>. Fuelled by coffee and Ritalin.</p>
-    </footer>
+        <!-- Blogs Section -->
+        <section id="blogs" class="content-section">
+            <h2 class="scroll-fade">latest posts</h2>
+            <div class="blog-grid">
 
-    <script>
-        // --- 1. Dark Mode Toggle Handler ---
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        const themeIcon = document.getElementById('theme-icon');
+                <!-- Blog Post 1 -->
+                <article class="blog-card scroll-fade">
+                    <h3><a href="#/post/the-picnic-paradox">ai, the future of work, and the rather questionable assumption that we'll all be going picnicking</a></h3>
+                    <div class="date">published on: november 13, 2026</div>
+                    <div class="blog-preview">
+                        the existence of artificial intelligence was theorised long before anyone had the computational resources to actually build it...
+                    </div>
+                    <a href="#/post/the-picnic-paradox" class="read-more-link">read full post &rarr;</a>
+                </article>
+                
+                <!-- Blog Post 2 -->
+                <article class="blog-card scroll-fade">
+                    <h3><a href="#/post/between-two-worlds">between two worlds</a></h3>
+                    <div class="date">published on: september 26, 2026</div>
+                    <div class="blog-preview">
+                        for the past five years, living as a guy has been my reality. cutting my hair, changing my presentation, and...
+                    </div>
+                    <a href="#/post/between-two-worlds" class="read-more-link">read full post &rarr;</a>
+                </article>
 
-        // Check for saved user preference in localStorage
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
-            document.body.classList.add('dark-mode');
+                <!-- Blog Post 3 -->
+                <article class="blog-card scroll-fade">
+                    <h3><a href="#/post/rant-about-religion">rant about religion</a></h3>
+                    <div class="date">published on: september 19, 2026</div>
+                    <div class="blog-preview">
+                        why is god everywhere? one cannot hide from him. not in the sense that his presence is integrated into each and every one...
+                    </div>
+                    <a href="#/post/rant-about-religion" class="read-more-link">read full post &rarr;</a>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="content-section scroll-fade">
+            <h2>contact me</h2>
+            <p>
+                reach out if you have any questions, if you want to hire me, or if you just want to say hi lol
+            </p>
+            <p style="margin-top: 1rem;">
+                email: <a href="mailto:shahin.matin@hotmail.com">shahin.matin@hotmail.com</a>
+            </p>
+        </section>
+    </div>
+
+    <!-- Dedicated Full Article Page Container -->
+    <article id="post-view">
+        <a href="#blogs" class="back-btn">&larr; back to all posts</a>
+        <h1 id="article-title">article title</h1>
+        <div id="article-date" class="date">published date</div>
+        <div id="article-body" class="article-body">
+            <!-- Post content loaded via JavaScript -->
+        </div>
+    </article>
+</main>
+
+<footer>
+    <p>&copy; 2026 <strong>shahin matin</strong>. fuelled by coffee and ritalin.</p>
+</footer>
+
+<script>
+    // --- 1. Dark Mode Toggle Handler ---
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+        themeIcon.classList.remove('fa-sun');
+        themeIcon.classList.add('fa-moon');
+    }
+
+    themeToggleBtn.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        
+        if (document.body.classList.contains('dark-mode')) {
             themeIcon.classList.remove('fa-sun');
             themeIcon.classList.add('fa-moon');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+            localStorage.setItem('theme', 'light');
+        }
+    });
+
+    // --- 2. Master Scroll Animation Handler (Splash Fade-out, Header, Hero Words, Bio Slide, & Section Fade-ins) ---
+    const siteHeader = document.getElementById('site-header');
+    const paintingSplash = document.getElementById('painting-splash');
+    const splashHello = document.getElementById('splash-hello');
+    const aboutSection = document.getElementById('about');
+    const heroHeadline = document.getElementById('hero-headline');
+    const heroText = heroHeadline.querySelector('.hero-editorial-text');
+    const revealWords = document.querySelectorAll('.reveal-word');
+    const bioPanel = document.getElementById('bio-panel');
+    const scrollFadeElements = document.querySelectorAll('.scroll-fade');
+
+    function clamp(val, min, max) {
+        return Math.min(Math.max(val, min), max);
+    }
+
+    function easeOutCubic(t) {
+        return 1 - Math.pow(1 - t, 3);
+    }
+
+    function easeInOutCubic(t) {
+        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    }
+
+    function handleScrollAnimations() {
+        const scrollY = window.scrollY;
+
+        // A. Header transition from transparent to frosted glass
+        if (scrollY > 60) {
+            siteHeader.classList.add('scrolled');
+        } else {
+            siteHeader.classList.remove('scrolled');
         }
 
-        themeToggleBtn.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
+        // B. Splash Painting & "Hello." Fade-out on scroll (fades completely over first 450px of scrolling)
+        const splashHeight = window.innerHeight;
+        const splashProgress = clamp(scrollY / (splashHeight * 0.75), 0, 1);
+        const splashOpacity = 1 - splashProgress;
+        paintingSplash.style.opacity = splashOpacity;
+        splashHello.style.opacity = Math.max(0, 1 - (scrollY / (splashHeight * 0.35)));
+        splashHello.style.transform = `translateY(${scrollY * 0.25}px)`;
+
+        // C. Hero Word-by-Word Reveal & Slide-to-Bio Choreography inside #about
+        if (aboutSection) {
+            const rect = aboutSection.getBoundingClientRect();
+            const scrollableDistance = aboutSection.offsetHeight - window.innerHeight;
             
-            if (document.body.classList.contains('dark-mode')) {
-                themeIcon.classList.remove('fa-sun');
-                themeIcon.classList.add('fa-moon');
-                localStorage.setItem('theme', 'dark');
-            } else {
-                themeIcon.classList.remove('fa-moon');
-                themeIcon.classList.add('fa-sun');
-                localStorage.setItem('theme', 'light');
-            }
-        });
+            if (scrollableDistance > 0) {
+                const scrolledIntoAbout = -rect.top;
+                const progress = clamp(scrolledIntoAbout / scrollableDistance, 0, 1);
 
-        // --- 2. Data Store for Full Blog Posts ---
-        const blogPosts = {
-            'between-two-worlds': {
-                title: "BETWEEN TWO WORLDS",
-                date: "Published on: September 26, 2026",
-                content: `
-                    <p>For the past five years, living as a guy has been my reality. Cutting my hair, changing my presentation, and being recognized as male in daily life has brought a sense of comfort that living as a girl never provided. Yet, despite living this way since 2021, navigating this path often brings waves of intense self-doubt, imposter syndrome, and emotional exhaustion.</p>
-                    <p>When you grow up in an environment where your identity is constantly questioned, it becomes second nature to question yourself. Family members point out feminine features, frame social support as performative kindness, or suggest that daily self-talk could change internal identity. Warnings about detransition, threats of disownment over medical transition, and suggestions to postpone living authentically until years down the line create a constant, heavy pressure.</p>
-                    <p>It leaves you trapped in a painful contradiction. Loving a family that raised you while struggling against their lack of acceptance creates constant emotional friction. Parents often link trans identity to past periods of teenage crisis, viewing it as a leftover symptom of prior instability rather than a steady, stabilizing constant. Trying to explain that living authentically is a source of peace, rather than an impulsive phase, can feel almost impossible.</p>
-                    <p>Lately, the emotional strain has peaked. Between managing neurodivergence, academic stress, and ongoing conflict at home, severe burnout sets in. It leads to endless loops of self-questioning: <em>Was this identity influenced by social media years ago? Is it a fear of general social perception? What if medical steps like testosterone therapy bring regret later on?</em></p>
-                    <p>When the stress becomes overwhelming, dissociation takes over. Identifying as a boy feels unnatural, but identifying as a girl feels like pretending. Everything feels detached, like playing a role rather than simply existing.</p>
-                    <p>Yet, beneath the noise, guilt, and social pressure, the underlying need for a clean slate remains clear: moving forward into university, building genuine social connections as a guy, and stepping into adulthood authentically.</p>
-                    <p>Navigating medical appointments and future decisions doesn't require having every single answer today. The focus remains on step-by-step progress—protecting mental peace, managing immediate responsibilities, and granting oneself the time to navigate identity without rushing to meet anyone else's timeline.</p>
-                `
-            },
-            'rant-about-religion': {
-                title: "RANT ABOUT RELIGION",
-                date: "Published on: September 19, 2026",
-                content: `
-                    <p>Why is God everywhere? One cannot hide from Him. Not in the sense that his presence is integrated into each and every one of us, but rather the popular idea, embedded into humankind, that a higher being must exist. This is ironic, as humans are the most egotistic beings to have set foot on this rock. So why would they willingly submit themselves into diminution?</p>
-                    <p>The answer is that - as egotistical and biased humans are, they seek solace. There is no other answer to the meaning of life, other than God, for these people. We beings are constantly scavenging for a reason as to why WE, US, why WE exist, supposedly alone, in our universe. So, the logical thing was to explain unexplainable phenomena (during those ages), through the existence of a higher being. Now, we humans have another trait, since we are still animals, we fear change. This is something evolutionary, since change disturbs a groups' dynamics and must adapt quickly to continue surviving. Hence, our ideals of human life and why we exist have not evolved since religion was invented. Even after the colossal amount of scientific discoveries, believing in a God is still the answer for the majority of people.</p>
-                    <p>My confusion arises due to the fact that so many beings can submit to believing in one specific God - as there MUST be a right God and philosophy of living, Briefly said, every devotee essentially takes part in a giant lottery game, where no one wins at the end.</p>
-                    <p> I respect religions, (lol no i dont) on the other hand, I do not tolerate the disrespect and shortsightedness that comes packaged alongside it. It is understandable, for one thing, if people are at a point in their lives where they are scared and confused, thus seeking a divinity due to their vulnerability. But if one thinks about the unholy (get it) amount of wars that have occurred, fighting for the "correct" belief, all the segregations and sick acts of people, can we really continue to tolerate religion? Can we not place our beliefs and hearts into a higher being that created our universe and whom left us, in order to observe humankind as some kind of social experiment, instead of crying out loud that "Jesus died for your sins!"? I mean, if I jumped off of a building and claimed that I was going to cleanse mankind of their wrongdoings, I would not be praised, but rather be placed in an asylum. The ignorance of mankind is something I pray (lol) becomes resolved in the near future.</p>
-                    <p>Religion is the chained foot to a rock that keeps us behind and hinders us from moving towards a better and brighter future. Yet the myths and legends in divine scripts are still not questioned and are accepted (because they can be interpreted in any way).</p>
-                `
-            }
-        };
+                // Phase 1: Word-by-word reveal (0.00 -> 0.58)
+                const wordPhaseEnd = 0.58;
+                const totalWords = revealWords.length;
+                const wordSlot = wordPhaseEnd / totalWords;
 
-        const homeView = document.getElementById('home-view');
-        const postView = document.getElementById('post-view');
-        const articleTitle = document.getElementById('article-title');
-        const articleDate = document.getElementById('article-date');
-        const articleBody = document.getElementById('article-body');
-        const sections = document.querySelectorAll('#home-view section');
-        const navLinks = document.querySelectorAll('nav a');
+                revealWords.forEach((word, index) => {
+                    const start = index * wordSlot * 0.85;
+                    const end = start + wordSlot * 1.15;
+                    const rawP = clamp((progress - start) / (end - start), 0, 1);
+                    const easedP = easeOutCubic(rawP);
 
-        // --- 3. Client-side Router ---
-        function handleRoute() {
-            const hash = window.location.hash;
+                    word.style.opacity = easedP;
+                    word.style.transform = `translateY(${(1 - easedP) * 28}px)`;
+                    word.style.filter = `blur(${(1 - easedP) * 6}px)`;
+                });
 
-            if (hash.startsWith('#/post/')) {
-                const postId = hash.replace('#/post/', '');
-                const post = blogPosts[postId];
+                // Phase 2: Slide headline left and fade in bio (0.64 -> 0.94)
+                const slideStart = 0.64;
+                const slideEnd = 0.94;
+                const slideRaw = clamp((progress - slideStart) / (slideEnd - slideStart), 0, 1);
+                const slideEased = easeInOutCubic(slideRaw);
 
-                if (post) {
-                    homeView.style.display = 'none';
-                    postView.style.display = 'block';
+                const isMobile = window.innerWidth <= 900;
 
-                    articleTitle.textContent = post.title;
-                    articleDate.textContent = post.date;
-                    articleBody.innerHTML = post.content;
+                if (!isMobile) {
+                    const currentLeft = 50 - (43 * slideEased);
+                    const currentTranslateX = -50 * (1 - slideEased);
+                    const currentScale = 1 - (0.34 * slideEased);
 
-                    navLinks.forEach(link => link.classList.remove('active'));
-                    const blogNavLink = document.querySelector('nav a[href="#blogs"]');
-                    if (blogNavLink) blogNavLink.classList.add('active');
+                    heroHeadline.style.left = `${currentLeft}%`;
+                    heroHeadline.style.top = '52%';
+                    heroHeadline.style.width = `${90 - (45 * slideEased)}vw`;
+                    heroHeadline.style.transform = `translate(${currentTranslateX}%, -50%) scale(${currentScale})`;
+                    heroHeadline.style.transformOrigin = 'left center';
+                    heroText.style.textAlign = slideEased > 0.25 ? 'left' : 'center';
 
-                    window.scrollTo(0, 0);
-                    return;
+                    bioPanel.style.opacity = slideEased;
+                    bioPanel.style.top = '52%';
+                    bioPanel.style.transform = `translateY(${-50 + (1 - slideEased) * 14}%)`;
+                } else {
+                    const currentTop = 50 - (24 * slideEased);
+                    const currentScale = 1 - (0.35 * slideEased);
+
+                    heroHeadline.style.left = '50%';
+                    heroHeadline.style.top = `${currentTop}%`;
+                    heroHeadline.style.width = '90vw';
+                    heroHeadline.style.transform = `translate(-50%, -50%) scale(${currentScale})`;
+                    heroHeadline.style.transformOrigin = 'center center';
+                    heroText.style.textAlign = 'center';
+
+                    bioPanel.style.opacity = slideEased;
+                    bioPanel.style.top = '62%';
+                    bioPanel.style.transform = `translateY(${-35 + (1 - slideEased) * 15}%)`;
                 }
-            }
 
-            postView.style.display = 'none';
-            homeView.style.display = 'block';
-
-            if (hash && hash !== '#') {
-                const targetElement = document.querySelector(hash);
-                if (targetElement) {
-                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                if (slideEased > 0.5) {
+                    bioPanel.classList.add('is-visible');
+                } else {
+                    bioPanel.classList.remove('is-visible');
                 }
             }
         }
 
-        window.addEventListener('hashchange', handleRoute);
-        window.addEventListener('load', handleRoute);
-
-        // --- 4. Scroll Navigation Highlighting ---
-        window.addEventListener('scroll', () => {
-            if (homeView.style.display === 'none') return;
-
-            let currentSection = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                
-                if (window.scrollY >= (sectionTop - sectionHeight / 3)) {
-                    currentSection = section.getAttribute('id');
-                }
-            });
-
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${currentSection}`) {
-                    link.classList.add('active');
-                }
-            });
+        // D. Reliable Scroll Fade-In for Blog Cards & Contact Section
+        scrollFadeElements.forEach(el => {
+            const elRect = el.getBoundingClientRect();
+            const triggerPoint = window.innerHeight * 0.86;
+            if (elRect.top < triggerPoint) {
+                el.classList.add('visible');
+            }
         });
-    </script>
+    }
+
+    window.addEventListener('scroll', handleScrollAnimations, { passive: true });
+    window.addEventListener('resize', handleScrollAnimations);
+    window.addEventListener('load', handleScrollAnimations);
+
+    // --- 3. Data Store for Full Blog Posts ---
+    const blogPosts = {
+        
+        'the-picnic-paradox': {
+            title: "ai, the future of work, and the rather questionable assumption that we'll all be going picnicking",
+            date: "published on: november 13, 2026",
+            content: `
+                <p>the existence of artificial intelligence was theorised long before anyone had the computational resources to actually build it. its foundations were laid in the 1940s, and the field of ai research was formally established in 1956, eventually gaining momentum as computers became increasingly powerful.</p>
+                <p>today, machines can carry out unbelievably complex tasks. they can process information, recognise patterns, generate text, write code, solve mathematical problems and, increasingly, perform tasks that we once considered exclusively human. they can arrive at solutions in a fraction of the time it would take a human being, sometimes solving problems that would be practically impossible for us to approach at the same scale.</p>
+                <p>and yet, a considerable portion of the public conversation surrounding ai seems to revolve around whether we should be excited or frightened. more specifically, whether the people concerned about the acceleration of ai development have any legitimate reason to be.</p>
+                <p>many people argue that the ai luddites of our era have no right to be scared. a common argument, for example, is how mathematics teachers were once frightened by the implications of schoolchildren using calculators, supposedly leading to an entire generation unable to perform basic arithmetic. or how people predicted that computers would automate so many jobs that half the population would be left unemployed, without a career or any meaningful purpose.</p>
+                <p>the implication is that we have heard all of this before. technological advancement has always been met with resistance, and yet here we are. we have calculators, computers, the internet, and an economy that, for the most part, has managed to adapt to all of them.</p>
+                <p>but i don't think these technologies are necessarily comparable to artificial intelligence.</p>
+                <p>if we allow the development of ai to take a particularly dystopian direction, especially when combined with what i can only describe as end-stage capitalism, i think it becomes rather obvious that these so-called ai luddites might actually have a reason to be concerned. and i'm not talking about defence contractors using ai to identify human targets, or autonomous weapons systems being deployed against civilians. that's an entirely different discussion. i'm talking about something considerably more mundane, and perhaps more immediately relevant to the average person: employment.</p>
+                <p>large companies, not necessarily even those working in ai, will inevitably look for ways to replace human workers. not necessarily because the people running these companies are evil, or because they have some particular hatred towards the working class. it's simply that the incentive structure of a company, as time goes by, is to maximise profits. and what better way to do that than by replacing an employee with a machine that doesn't require a salary, doesn't take sick leave, doesn't go on holiday, doesn't demand better working conditions and doesn't need to sleep?</p>
+                <p>san francisco e/acc techbros, as much as i resonate with them in other aspects, seem somewhat blind to this particular problem. their vision of the future is remarkably optimistic. machines will eventually take over all the undesirable jobs, leaving the good ones for us humans. there will be no more five-day workweeks, no more overtime hours in the office, no more spending the majority of our lives doing things we would rather not be doing. instead, since the machines have taken over, we can finally be human. we can go picnicking, sunbathe in the grass, pick flowers and hold hands. the robots will do the work, and we will enjoy life. no more responsibilities!</p>
+                <p>i have so many questions about this mentality.</p>
+                <p>firstly, who exactly is going to own these machines? who is going to own the infrastructure, the computing power, the factories and the companies that benefit from this automation? because i find it rather difficult to believe that the people currently accumulating enormous amounts of capital will suddenly decide to distribute the wealth generated by their machines equally among the rest of us.</p>
+                <p>there seems to be an underlying assumption that technological progress will automatically translate into social progress. that because we are technically capable of producing more with less human labour, everyone will somehow benefit from it. but why should that be the case? technological progress and economic equality are two entirely different things. one does not necessarily follow from the other.</p>
+                <p>and this brings me to another question: if companies automate the production of virtually everything, who exactly is supposed to buy their products?</p>
+                <p>a capitalist economy depends on consumption. companies produce goods and services because people have money to buy them. people have money because they work and receive wages. if you gradually eliminate the need for human labour, you also eliminate one of the primary mechanisms through which people obtain the money required to participate in that very economy. you cannot indefinitely replace consumers with machines and expect the system to continue functioning as it did before.</p>
+                <p>of course, there are potential solutions. universal basic income, for example, is frequently brought up in discussions about mass automation. in theory, if machines generate enough wealth, governments could redistribute a portion of that wealth to people who no longer need to work. perhaps we could transition towards an economy in which survival is no longer conditional on employment. i actually find this prospect rather interesting.</p>
+                <p>but even then, there are questions about who controls the wealth, how it is distributed, who decides how much people receive, and whether governments would have the political incentive to implement such a system in the first place. these aren't merely technical problems that will resolve themselves once the models become sufficiently intelligent.</p>
+                <p>i also think there's an important distinction between eliminating undesirable work and eliminating the need for people to work. those two things are not interchangeable. most people don't necessarily despise the idea of contributing something to society. there is a difference between spending forty hours a week performing repetitive, meaningless tasks because you need to pay rent and spending your time doing something you actually find intellectually stimulating. if ai could genuinely free us from the former, that would be an extraordinary achievement. but i don't think we should confuse that possibility with the idea that everyone will automatically be better off.</p>
+                <p>and perhaps that's what bothers me most about some of the more optimistic predictions surrounding ai. they treat the economic and political consequences of technological development as if they were inevitable, almost as though the future were a predetermined sequence of events. the machines become intelligent, labour becomes automated, productivity increases, and humanity enters some wonderful post-work society. conveniently, the rather important question of how we get from one stage to another is often left unanswered.</p>
+                <p>i am not arguing that ai development should be stopped. quite the opposite, actually. i find the technology extraordinarily fascinating, and i think its potential applications in scientific research, medicine, engineering and countless other fields are difficult to overstate. imagine being able to accelerate drug discovery, improve our understanding of biological systems, develop new materials or solve problems that have occupied researchers for decades. i would be rather disappointed if we deliberately slowed down scientific progress simply because we were uncomfortable with its implications.</p>
+                <p>but being excited about a technology and being critical of the way it is implemented are not mutually exclusive positions.</p>
+                <p>i don't think we should have to choose between being an ai accelerationist and being an ai doomer. we can acknowledge that artificial intelligence might be one of the most consequential technological developments in human history while simultaneously questioning who stands to benefit from it, who bears its costs and what kind of society we are actually building around it.</p>
+                <p>because perhaps the real question isn't whether machines will eventually be capable of doing everything we do. perhaps it's what happens to the rest of us when they can.</p>
+                <p>and i would quite like to know who is paying for the picnic.</p>
+            `
+        },
+        
+        'between-two-worlds': {
+            title: "between two worlds",
+            date: "published on: september 26, 2026",
+            content: `
+                <p>for five years, living as a guy has just been my life. cutting my hair, changing how i dress, people reading me as male, it actually gave me a quiet relief i never once felt trying to live as a girl. but even after doing this since 2021, my brain still finds ways to drag me back into these heavy waves of self doubt, imposter syndrome, and total exhaustion.</p>
+                <p>when you grow up with people constantly picking apart who you are, second guessing yourself becomes your default setting. family members zero in on any remaining feminine features, act like basic decency is some huge favor, or try to convince you that a bit of positive self talk is all it takes to rewrite your internal identity. between warnings about detransition, threats of disownment if i ever touch medical stuff, and people telling me to just put my life on hold for years, the pressure gets suffocating.</p>
+                <p>it’s a brutal tug of war. you love the people who raised you, but you're constantly fighting just to get them to tolerate your existence. parents always want to blame being trans on a teenage phase or some past rough patch, as if it's just a symptom of instability rather than the one thing that actually keeps you stable. trying to get them to understand that living authentically brings peace instead of chaos feels completely impossible.</p>
+                <p>lately, everything has hit a breaking point. mixing neurodivergence, uni stress, and non-stop tension at home has burned me out completely. my brain just loops through the same exhausting questions: <em>did i just pick this up from social media years ago? am i just paranoid? what if testosterone or medical stuff ends up being something i regret?</em></p>
+                <p>when the stress gets too loud, i just dissociate. being a guy feels right, but trying to be a girl feels like acting in a bad play. everything gets numb and detached, like i'm just watching my own life happen instead of living it.</p>
+                <p>still, underneath all the noise, guilt, and external pressure, there's a simple truth: i want a clean slate. i want to head into university, make real friends as myself, and step into adulthood without hiding.</p>
+                <p>figuring out medical stuff or long term decisions doesn't mean i need every answer right now. right now, it's just about taking it one step at a time, protecting whatever mental peace i have left, and giving myself room to breathe without rushing to fit anyone else's timeline.</p>
+            `
+        },
+        'rant-about-religion': {
+            title: "rant about religion",
+            date: "published on: september 19, 2026",
+            content: `
+                <p>why is god everywhere? one cannot hide from him. not in the sense that his presence is integrated into each and every one of us, but rather the popular idea, embedded into humankind, that a higher being must exist. this is ironic, as humans are the most egotistic beings to have set foot on this rock. so why would they willingly submit themselves into diminution?</p>
+                <p>the answer is that - as egotistical and biased humans are, they seek solace. there is no other answer to the meaning of life, other than god, for these people. we beings are constantly scavenging for a reason as to why we, us, why we exist, supposedly alone, in our universe. so, the logical thing was to explain unexplainable phenomena (during those ages), through the existence of a higher being. now, we humans have another trait, since we are still animals, we fear change. this is something evolutionary, since change disturbs a groups' dynamics and must adapt quickly to continue surviving. hence, our ideals of human life and why we exist have not evolved since religion was invented. even after the colossal amount of scientific discoveries, believing in a god is still the answer for the majority of people.</p>
+                <p>my confusion arises due to the fact that so many beings can submit to believing in one specific god - as there must be a right god and philosophy of living, briefly said, every devotee essentially takes part in a giant lottery game, where no one wins at the end.</p>
+                <p>i respect religions, (lol no i dont) on the other hand, i do not tolerate the disrespect and shortsightedness that comes packaged alongside it. it is understandable, for one thing, if people are at a point in their lives where they are scared and confused, thus seeking a divinity due to their vulnerability. but if one thinks about the unholy (get it) amount of wars that have occurred, fighting for the "correct" belief, all the segregations and sick acts of people, can we really continue to tolerate religion? can we not place our beliefs and hearts into a higher being that created our universe and whom left us, in order to observe humankind as some kind of social experiment, instead of crying out loud that "jesus died for your sins!"? i mean, if i jumped off of a building and claimed that i was going to cleanse mankind of their wrongdoings, i would not be praised, but rather be placed in an asylum. the ignorance of mankind is something i pray (lol) becomes resolved in the near future.</p>
+                <p>religion is the chained foot to a rock that keeps us behind and hinders us from moving towards a better and brighter future. yet the myths and legends in divine scripts are still not questioned and are accepted (because they can be interpreted in any way).</p>
+            `
+        }
+    };
+
+    const homeView = document.getElementById('home-view');
+    const postView = document.getElementById('post-view');
+    const articleTitle = document.getElementById('article-title');
+    const articleDate = document.getElementById('article-date');
+    const articleBody = document.getElementById('article-body');
+    const sections = document.querySelectorAll('#home-view section');
+    const navLinks = document.querySelectorAll('nav a');
+
+    // --- 4. Client-side Router ---
+    function handleRoute() {
+        const hash = window.location.hash;
+
+        if (hash.startsWith('#/post/')) {
+            const postId = hash.replace('#/post/', '');
+            const post = blogPosts[postId];
+
+            if (post) {
+                homeView.style.display = 'none';
+                postView.style.display = 'block';
+
+                articleTitle.textContent = post.title;
+                articleDate.textContent = post.date;
+                articleBody.innerHTML = post.content;
+
+                navLinks.forEach(link => link.classList.remove('active'));
+                const blogNavLink = document.querySelector('nav a[href="#blogs"]');
+                if (blogNavLink) blogNavLink.classList.add('active');
+
+                window.scrollTo(0, 0);
+                return;
+            }
+        }
+
+        postView.style.display = 'none';
+        homeView.style.display = 'block';
+        handleScrollAnimations();
+
+        if (hash && hash !== '#') {
+            const targetElement = document.querySelector(hash);
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    }
+
+    window.addEventListener('hashchange', handleRoute);
+    window.addEventListener('load', handleRoute);
+
+    // --- 5. Scroll Navigation Highlighting ---
+    window.addEventListener('scroll', () => {
+        if (homeView.style.display === 'none') return;
+
+        let currentSection = 'about';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (window.scrollY >= (sectionTop - window.innerHeight / 3)) {
+                currentSection = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${currentSection}`) {
+                link.classList.add('active');
+            }
+        });
+    }, { passive: true });
+</script>
 </body>
 </html>
